@@ -120,6 +120,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <mainClass>com.tradepro.Main</mainClass>
                 </configuration>
             </plugin>
 

@@ -1,0 +1,16 @@
+run = "mvn spring-boot:run"
+hidden = ["**/*.class"]
+
+[packager]
+language = "java"
+
+[languages]
+
+[languages.java]
+pattern = "**/*.java"
+
+[languages.java.languageServer]
+start = "jdt-language-server"
+
+[nix]
+channel = "stable-22_11" 
