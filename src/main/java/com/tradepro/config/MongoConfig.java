@@ -26,10 +26,13 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     @Override
     @Bean
     public MongoClient mongoClient() {
-        ConnectionString connectionString = new ConnectionString(mongoUri);
-        MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
-            .applyConnectionString(connectionString)
+        MongoClientSettings settings = MongoClientSettings.builder()
+            .applyConnectionString(new ConnectionString(mongoUri))
+            .applyToSslSettings(builder -> 
+                builder.enabled(true)
+                       .invalidHostNameAllowed(true))
             .build();
-        return MongoClients.create(mongoClientSettings);
+
+        return MongoClients.create(settings);
     }
 } 
