@@ -1,4 +1,4 @@
-run = "mvn spring-boot:run"
+run = "mvn -s src/main/resources/settings.xml spring-boot:run"
 hidden = ["**/*.class"]
 
 [packager]
