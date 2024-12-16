@@ -30,10 +30,13 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/api/auth/login",
-                    "/api/auth/register",
-                    "/api/auth/forgot-password",
-                    "/api/auth/reset-password",
+                    "/api/users/login",
+                    "/api/users/register", 
+                    "/api/users/forgot-password",
+                    "/api/users/reset-password",
+                    "/api/trades/**",
+                    "/api/stocks/**",
+                    "/api/contact",
                     "/",
                     "/error",
                     "/static/**",
