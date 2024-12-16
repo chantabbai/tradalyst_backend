@@ -1,5 +1,6 @@
 run = "mvn -s src/main/resources/settings.xml spring-boot:run"
 hidden = ["**/*.class"]
+modules = ["java-graalvm22.3", "nix"]
 
 [packager]
 language = "java"
@@ -13,4 +14,12 @@ pattern = "**/*.java"
 start = "jdt-language-server"
 
 [nix]
-channel = "stable-22_11" 
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "mvn -s src/main/resources/settings.xml spring-boot:run"]
+deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 8080
+externalPort = 80
