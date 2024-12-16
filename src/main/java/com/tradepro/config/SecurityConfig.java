@@ -33,7 +33,13 @@ public class SecurityConfig {
                     "/api/auth/login",
                     "/api/auth/register",
                     "/api/auth/forgot-password",
-                    "/api/auth/reset-password"
+                    "/api/auth/reset-password",
+                    "/",
+                    "/error",
+                    "/static/**",
+                    "/css/**",
+                    "/js/**",
+                    "/images/**"
                 ).permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(new JwtAuthenticationFilter(userService), 
