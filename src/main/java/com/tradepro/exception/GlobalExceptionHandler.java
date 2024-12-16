@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -50,6 +51,17 @@ public class GlobalExceptionHandler {
             System.currentTimeMillis()
         );
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<?> handleNoHandlerFound(NoHandlerFoundException ex) {
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleGenericError(Exception ex) {
+        return ResponseEntity.internalServerError()
+            .body(new ErrorResponse("Internal Server Error", ex.getMessage()));
     }
 }
 

@@ -24,18 +24,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configure(http))
+            .cors()
+            .and()
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/api/users/forgot-password",
-                    "/api/users/reset-password",
-                    "/api/users/login", 
-                    "/api/users/register", 
-                    "/api/trades/**", 
-                    "/api/stocks/**",
-                    "/api/contact"
+                    "/api/auth/login",
+                    "/api/auth/register",
+                    "/api/auth/forgot-password",
+                    "/api/auth/reset-password"
                 ).permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(new JwtAuthenticationFilter(userService), 
