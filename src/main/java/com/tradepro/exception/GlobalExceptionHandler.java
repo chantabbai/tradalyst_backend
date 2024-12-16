@@ -57,12 +57,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleNoHandlerFound(NoHandlerFoundException ex) {
         return ResponseEntity.notFound().build();
     }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> handleGenericError(Exception ex) {
-        return ResponseEntity.internalServerError()
-            .body(new ErrorResponse(500, ex.getMessage()));
-    }
 }
 
 class ErrorResponse {
