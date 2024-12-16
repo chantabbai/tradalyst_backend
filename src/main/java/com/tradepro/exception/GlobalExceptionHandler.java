@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleGenericError(Exception ex) {
         return ResponseEntity.internalServerError()
-            .body(new ErrorResponse("Internal Server Error", ex.getMessage()));
+            .body(new ErrorResponse(500, ex.getMessage()));
     }
 }
 
