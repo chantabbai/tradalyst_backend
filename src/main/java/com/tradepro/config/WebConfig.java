@@ -11,7 +11,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-            .allowedOrigins("http://0.0.0.0:3000", "https://*.repl.co", "https://*.spock.replit.dev")
+            .allowedOrigins(
+                "http://0.0.0.0:3000", 
+                "https://*.repl.co", 
+                "https://*.spock.replit.dev",
+                "https://tradalystfrontend-chantabbai07ai.replit.app"
+            )
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
             .allowedHeaders("*")
             .exposedHeaders("Authorization")
