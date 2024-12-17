@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
             .allowedOrigins(
                 "http://0.0.0.0:3000", 
                 "https://*.repl.co", 
-                "https://*.spock.replit.dev",
+                "https://*.replit.dev",
                 "https://tradalystfrontend-chantabbai07ai.replit.app"
             )
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
