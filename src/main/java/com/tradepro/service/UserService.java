@@ -3,24 +3,24 @@ package com.tradepro.service;
 import com.tradepro.exception.CustomException;
 import com.tradepro.model.User;
 import com.tradepro.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.Date;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
-import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import java.util.UUID;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
@@ -209,7 +209,7 @@ public class UserService {
         message.setSubject("Password Reset Request");
         message.setText("Hello,\n\n" +
                 "You have requested to reset your password. Click the link below to reset it:\n\n" +
-                "http://localhost:3000/auth/reset-password?token=" + resetToken + "\n\n" +
+                "http://tradalyst.com/auth/reset-password?token=" + resetToken + "\n\n" +
                 "If you didn't request this, please ignore this email.\n\n" +
                 "Best regards,\n" +
                 "Tradalyst Team");
