@@ -8,6 +8,11 @@ public class HomeController {
 
     @GetMapping("/")
     public String welcome() {
-        return "TradePro API is running";
+        return "TradePro API is running on port 8080";
+    }
+
+    @GetMapping("/health")
+    public String health() {
+        return "OK";
     }
 } 
