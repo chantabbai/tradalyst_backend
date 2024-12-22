@@ -15,7 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
                 "http://0.0.0.0:3000", 
                 "https://*.repl.co", 
                 "https://*.replit.dev",
-                "https://tradalystfrontend-chantabbai07ai.replit.app"
+                "https://tradalystfrontend-chantabbai07ai.replit.app",
+                "https://tradalyst.com/"
             )
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
             .allowedHeaders("*")
