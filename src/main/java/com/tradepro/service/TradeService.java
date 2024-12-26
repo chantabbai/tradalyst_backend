@@ -121,4 +121,10 @@ public class TradeService {
     public Trade save(Trade trade) {
         return tradeRepository.save(trade);
     }
+
+    public void deleteTrade(String id) {
+        Trade trade = tradeRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Trade not found with id: " + id));
+        tradeRepository.deleteById(id);
+    }
 }

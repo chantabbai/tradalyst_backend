@@ -721,6 +721,26 @@ public class TradeController {
                 .body(new ApiErrorResponse("Debug error: " + e.getMessage()));
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTrade(@PathVariable String id, @RequestHeader("Authorization") String token) {
+        try {
+            String userId = extractUserIdFromToken(token);
+            Trade trade = tradeService.findById(id);
+            
+            if (!trade.getUserId().equals(userId)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new ApiErrorResponse("You are not authorized to delete this trade"));
+            }
+            
+            tradeService.deleteTrade(id);
+            return ResponseEntity.ok(Map.of("message", "Trade deleted successfully"));
+        } catch (Exception e) {
+            logger.error("Error deleting trade", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ApiErrorResponse("Failed to delete trade: " + e.getMessage()));
+        }
+    }
 }
 
 /**
