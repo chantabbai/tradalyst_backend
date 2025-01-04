@@ -77,14 +77,48 @@ public class UserService {
         return isValid;
     }
 
+    private static final long TOKEN_VALIDITY = 24 * 60 * 60 * 1000; // 24 hours
+    private static final long REFRESH_THRESHOLD = 30 * 60 * 1000; // 30 minutes
+
     private String generateToken(User user) {
-        long expirationTime = 1000 * 60 * 60 * 24; // 24 hours
         return Jwts.builder()
-                .setSubject(user.getId()) // Use ID instead of email
+                .setSubject(user.getId())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY))
                 .signWith(key)
                 .compact();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            logger.error("Token validation failed: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean shouldTokenBeRefreshed(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            Date expirationDate = claims.getExpiration();
+            return (expirationDate.getTime() - System.currentTimeMillis()) < REFRESH_THRESHOLD;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public String refreshToken(String email) {
+        User user = findByEmail(email);
+        if (user == null) {
+            throw new CustomException("User not found");
+        }
+        return generateToken(user);
     }
 
     public String getUserIdByEmail(String email) {

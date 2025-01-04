@@ -21,6 +21,23 @@ import org.springframework.mail.javamail.JavaMailSender;
 @RequestMapping("/api/users")
 public class UserController {
 
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String token) {
+        try {
+            String email = userService.getEmailFromToken(token.replace("Bearer ", ""));
+            User user = userService.findByEmail(email);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("User not found"));
+            }
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            logger.error("Error fetching current user: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new MessageResponse("Error fetching user details"));
+        }
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
