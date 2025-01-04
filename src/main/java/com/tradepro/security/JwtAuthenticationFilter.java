@@ -31,13 +31,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 String token = authHeader.substring(7);
-                String userEmail = userService.getEmailFromToken(token);
                 
-                if (userEmail != null) {
+                if (userService.validateToken(token)) {
+                    String userEmail = userService.getEmailFromToken(token);
                     UsernamePasswordAuthenticationToken authentication = 
                         new UsernamePasswordAuthenticationToken(userEmail, null, null);
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                     logger.debug("Successfully authenticated user: {}", userEmail);
+                    
+                    // Handle token refresh if needed
+                    if (userService.shouldTokenBeRefreshed(token)) {
+                        String newToken = userService.refreshToken(userEmail);
+                        response.setHeader("Authorization", "Bearer " + newToken);
+                        response.setHeader("Access-Control-Expose-Headers", "Authorization");
+                    }
                 }
             }
         } catch (Exception e) {
