@@ -1,5 +1,5 @@
 
-run = "mvn -s src/main/resources/settings.xml spring-boot:run -Dspring.profiles.active=prod"
+run = "mvn -s src/main/resources/settings.xml spring-boot:run"
 hidden = ["**/*.class"]
 modules = ["java-graalvm22.3", "nix"]
 
