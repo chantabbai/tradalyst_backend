@@ -12,15 +12,11 @@ channel = "stable-22_11"
 language = "java"
 
 [languages]
-
 [languages.java]
 pattern = "**/*.java"
 
 [languages.java.languageServer]
 start = "jdt-language-server"
-
-[nix]
-channel = "stable-24_05"
 
 [deployment]
 run = ["sh", "-c", "mvn clean spring-boot:run"]
