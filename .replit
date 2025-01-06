@@ -1,7 +1,12 @@
 
-run = "mvn -s src/main/resources/settings.xml spring-boot:run"
-hidden = ["**/*.class"]
-modules = ["java-graalvm22.3", "nix"]
+run = ["sh", "-c", "mvn spring-boot:run"]
+entrypoint = "src/main/java/com/tradepro/TradeProApplication.java"
+
+[env]
+REPLIT_DISABLE_PACKAGE_LAYER = "1"
+
+[nix]
+channel = "stable-22_11"
 
 [packager]
 language = "java"
