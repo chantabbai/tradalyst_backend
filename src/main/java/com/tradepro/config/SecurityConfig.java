@@ -34,7 +34,6 @@ public class SecurityConfig {
                     "/api/users/register", 
                     "/api/users/forgot-password",
                     "/api/users/reset-password",
-                    "/api/users/me",
                     "/api/trades/**",
                     "/api/stocks/**",
                     "/api/contact",
