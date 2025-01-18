@@ -695,6 +695,18 @@ public class TradeController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTrade(@PathVariable String id) {
+        try {
+            logger.info("Received delete request for trade id: {}", id);
+            tradeService.deleteTrade(id);
+            return ResponseEntity.ok(Map.of("message", "Trade deleted successfully"));
+        } catch (Exception e) {
+            logger.error("Error deleting trade", e);
+            return ResponseEntity.status(500).body("An unexpected error occurred: " + e.getMessage());
+        }
+    }
+
     @PostMapping("/import/debug")
     public ResponseEntity<?> debugCsvImport(@RequestBody Map<String, String> payload) {
         try {

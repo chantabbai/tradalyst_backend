@@ -121,4 +121,11 @@ public class TradeService {
     public Trade save(Trade trade) {
         return tradeRepository.save(trade);
     }
+
+    public void deleteTrade(String id) {
+        logger.info("Deleting trade with id: {}", id);
+        Trade trade = findById(id);
+        tradeRepository.delete(trade);
+        logger.info("Trade deleted successfully");
+    }
 }
