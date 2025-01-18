@@ -1,26 +1,27 @@
 
-run = "mvn -s src/main/resources/settings.xml spring-boot:run"
-hidden = ["**/*.class"]
-modules = ["java-graalvm22.3", "nix"]
+run = ["sh", "-c", "mvn spring-boot:run"]
+entrypoint = "src/main/java/com/tradepro/TradeProApplication.java"
+
+[env]
+REPLIT_DISABLE_PACKAGE_LAYER = "1"
+
+[nix]
+channel = "stable-22_11"
 
 [packager]
 language = "java"
 
 [languages]
-
 [languages.java]
 pattern = "**/*.java"
 
 [languages.java.languageServer]
 start = "jdt-language-server"
 
-[nix]
-channel = "stable-24_05"
-
 [deployment]
-run = ["sh", "-c", "mvn -s src/main/resources/settings.xml spring-boot:run"]
+run = ["sh", "-c", "mvn clean spring-boot:run"]
 deploymentTarget = "cloudrun"
 
 [[ports]]
-localPort = 8080
+localPort = 80
 externalPort = 80
