@@ -16,10 +16,8 @@ public class WebConfig implements WebMvcConfigurer {
                 "https://*.repl.co", 
                 "https://*.replit.dev",
                 "https://tradalystfrontend-chantabbai07ai.replit.app",
-                "https://tradalyst.com",
-                "http://tradalyst.com",
-                "https://www.tradalyst.com",
-                "http://www.tradalyst.com"
+                "https://tradalyst.com/",
+                "https://c71f7103-fbd0-4f80-b1ad-4983fe533a72-00-33fxwqqrqumnb.spock.replit.dev/auth/login"
             )
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
             .allowedHeaders("*")

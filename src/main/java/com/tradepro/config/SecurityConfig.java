@@ -42,9 +42,7 @@ public class SecurityConfig {
                     "/static/**",
                     "/css/**",
                     "/js/**",
-                    "/images/**",
-                    "/favicon.ico",
-                    "/auth/**"
+                    "/images/**"
                 ).permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(new JwtAuthenticationFilter(userService), 
