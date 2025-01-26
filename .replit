@@ -1,4 +1,3 @@
-
 run = "mvn -s src/main/resources/settings.xml spring-boot:run"
 hidden = ["**/*.class"]
 modules = ["java-graalvm22.3", "nix"]
@@ -23,9 +22,9 @@ deploymentTarget = "cloudrun"
 build = ["sh", "-c", "mvn clean install"]
 
 [[ports]]
-localPort = 80
+localPort = 8080
 externalPort = 3000
 
 [[ports]]
-localPort = 8080
+localPort = 80
 externalPort = 80
