@@ -20,6 +20,7 @@ channel = "stable-24_05"
 [deployment]
 run = ["sh", "-c", "mvn -s src/main/resources/settings.xml spring-boot:run"]
 deploymentTarget = "cloudrun"
+build = ["sh", "-c", "mvn clean install"]
 
 [[ports]]
 localPort = 8080
