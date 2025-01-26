@@ -242,12 +242,13 @@ public class TradeController {
                 case "1M" -> endDate.minusMonths(1);
                 case "3M" -> endDate.minusMonths(3);
                 case "6M" -> endDate.minusMonths(6);
-                case "YTD" -> LocalDate.of(endDate.getYear(), 1, 1);
-                default -> LocalDate.parse("2000-01-01");
+                case "YTD" -> LocalDate.of(endDate.getYear(), 1, 1); // Start from January 1st of current year
+                default -> LocalDate.parse("2000-01-01"); // For "ALL" time frame
             };
 
             logger.info("Date range: {} to {}", startDate, endDate);
 
+            // Get all closed trades
             List<Trade> allTrades = tradeService.getTradesByUserId(userId);
             List<Trade> closedTrades = allTrades.stream()
                 .filter(trade -> 
@@ -260,7 +261,7 @@ public class TradeController {
             logger.info("Found {} closed trades", closedTrades.size());
 
             // Filter and transform trades into chart data
-            Map<String, Double> dailyPnL = new TreeMap<>(); // Using TreeMap to maintain date order
+            Map<String, Double> dailyPnL = new HashMap<>();
 
             for (Trade trade : closedTrades) {
                 try {
@@ -282,18 +283,15 @@ public class TradeController {
                 }
             }
 
-            // Calculate cumulative P&L
-            double runningTotal = 0.0;
-            List<Map<String, Object>> chartData = new ArrayList<>();
-
-            for (Map.Entry<String, Double> entry : dailyPnL.entrySet()) {
-                runningTotal += entry.getValue();
-                Map<String, Object> point = new HashMap<>();
-                point.put("date", entry.getKey());
-                point.put("dailyPnL", entry.getValue());
-                point.put("cumulativePnL", runningTotal);
-                chartData.add(point);
-            }
+            List<Map<String, Object>> chartData = dailyPnL.entrySet().stream()
+                .map(entry -> {
+                    Map<String, Object> point = new HashMap<>();
+                    point.put("date", entry.getKey());
+                    point.put("pnl", entry.getValue());
+                    return point;
+                })
+                .sorted((a, b) -> ((String) a.get("date")).compareTo((String) b.get("date")))
+                .collect(Collectors.toList());
 
             logger.info("Generated {} chart data points", chartData.size());
             logger.debug("Chart data: {}", chartData);
